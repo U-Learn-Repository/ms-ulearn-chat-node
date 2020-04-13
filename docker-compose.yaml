@@ -1,0 +1,32 @@
+version: "2.2"
+# Define our services 
+services: 
+  # This is our nodejs app built using the Dockerfile
+  ulearn-chat-ms:
+    # The name of our node app container
+    container_name: ulearn-chat-ms
+    # Restarts our node app whenever it fails
+    restart: always
+    # Builds the node app docker container from the local -
+    # Docker file we created
+    build:
+      context: .
+      dockerfile: Dockerfile_srv
+    # Exposes the necessary ports that our node app uses
+    ports:
+      - "3000:3000"
+    # All the services our node app will link to -
+    # which in our case is only mongo
+    # You can other services such as a Redis
+    links:
+      # The name should be similar to the service you will build
+      - ulearn-chat-db
+  # Our database service called mongo
+  ulearn-chat-db:
+    # The name of the database container, NOTE: it is similar to the name provided
+    container_name: ulearn-chat-db
+    # Builds a mongo image from the docker repository
+    image: mongo
+    # Exposes the ports that Mongo uses
+    ports:
+      - "27017:27017"
