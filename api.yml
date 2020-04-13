@@ -1,0 +1,285 @@
+swagger: "2.0"
+info:
+  description: "Api rest para el manejo de chats y grupos para la aplicacion u_learn"
+  version: "1.0.0"
+  title: "Api Chat"
+basePath: "/api/v1"
+tags:
+- name: "grupo"
+  description: "Api para manejo de grupos de chat"
+- name: "chat"
+  description: "Api para manejo de mensajes de chat"
+schemes:
+- "http"
+paths:
+  /grupo:
+    post:
+      tags:
+      - "grupo"
+      summary: "Crea un grupo de chat"
+      description: "Api para la creacion de un grupo de chat"
+      operationId: "createGrupo"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Parametros para la creacion"
+        required: true
+        schema:
+          $ref: "#/definitions/Grupo1"
+      responses:
+        400:
+          description: "Parametros invalidos"
+        201:
+          description: "Grupo creado"
+    get:
+      tags:
+      - "grupo"
+      summary: "Obtiene un grupo de chat"
+      description: "obtiene un grupo de chat buscando por los IDs de grupo y admin"
+      operationId: "updatePet"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "idAdmin"
+        in: "query"
+        description: "ID del administrador del grupo"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "idGrupo"
+        in: "query"
+        description: "ID del grupo"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        400:
+          description: "Parametros invalidos"
+        200:
+          description: "Grupo de chat"
+  /grupo/{idGrupo}:  
+    put:
+      tags:
+      - "grupo"
+      summary: "Actualiza un grupo de chat"
+      description: "Actualiza los participantes o titulo del grupo de chat"
+      operationId: "updateGrupo"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "idGrupo"
+        in: "path"
+        description: "ID del grupo"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Parametros para la actualizacion"
+        required: true
+        schema:
+          $ref: "#/definitions/Grupo1"
+      responses:
+        400:
+          description: "Parametros invalidos"
+        204:
+          description: "Grupo no encontrado"
+        200:
+          description: "Grupo actualizado"
+    delete:
+      tags:
+      - "grupo"
+      summary: "Elimina un grupo de chat"
+      description: "Elimina un grupo de chat"
+      operationId: "deleteGrupo"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "idGrupo"
+        in: "path"
+        description: "ID del grupo"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Parametros para la actualizacion"
+        required: true
+        schema:
+          $ref: "#/definitions/Grupo2"
+      responses:
+        400:
+          description: "Parametros invalidos"
+        200:
+          description: "Grupo eliminado"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+  /chat:
+    post:
+      tags:
+      - "chat"
+      summary: "Crea mensaje de chat"
+      description: "Creacion de un mensaje de chat"
+      operationId: "createChat"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Parametros para la creacion"
+        required: true
+        schema:
+          $ref: "#/definitions/Chat1"
+      responses:
+        400:
+          description: "Parametros invalidos"
+        201:
+          description: "Chat creado"
+    get:
+      tags:
+      - "chat"
+      summary: "Obtiene una coleccion de chat"
+      description: "obtiene un grupo de chat buscando por el ID del usuario"
+      operationId: "getAllChat"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "idAutor"
+        in: "query"
+        description: "ID del autor de chat"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        400:
+          description: "Parametros invalidos"
+        200:
+          description: "Coleccion de chat"
+    put:
+      tags:
+      - "chat"
+      summary: "Actualiza un chat"
+      description: "Actualiza el ultimo mensaje de chat del usuario"
+      operationId: "updateChat"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Parametros para la actualizacion"
+        required: true
+        schema:
+          $ref: "#/definitions/Chat1"
+      responses:
+        400:
+          description: "Parametros invalidos"
+        200:
+          description: "Chat actualizado"
+  /chat/{idChat}:
+    delete:
+      tags:
+      - "chat"
+      summary: "Elimina un chat"
+      description: "Elimina un chat"
+      operationId: "deleteChat"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "idChat"
+        in: "path"
+        description: "ID del chat"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Parametros para la eliminacion"
+        required: true
+        schema:
+          $ref: "#/definitions/Chat2"
+      responses:
+        400:
+          description: "Parametros invalidos"
+        200:
+          description: "Chat eliminado"
+          schema:
+            $ref: "#/definitions/ApiResponse"
+definitions:
+  Grupo1:
+    type: "object"
+    required:
+    - "titulo"
+    - "idAdmin"
+    - "idAutores"
+    properties:
+      titulo:
+        type: "string"
+        example: "Titulo del grupo"
+      idAdmin:
+        type: "integer"
+        format: "int64"
+      idAutores:
+        type: "array"
+        items:
+          type: "integer"
+  Grupo2:
+    type: "object"
+    required:
+    - "idAdmin"
+    properties:
+      idAdmin:
+        type: "integer"
+        format: "int64"
+  Chat1:
+    type: "object"
+    required:
+    - "idAutor"
+    - "idGrupo"
+    - "mensaje"
+    properties:
+      mensaje:
+        type: "string"
+        example: "Mensaje de chat"
+      idGrupo:
+        type: "integer"
+        format: "int64"
+      idAutor:
+        type: "integer"
+        format: "int64"
+  Chat2:
+    type: "object"
+    required:
+    - "idAutor"
+    properties:
+      idAutor:
+        type: "integer"
+        format: "int64"
+  ApiResponse:
+    type: "object"
+    required:
+    - "success"
+    properties:
+      success:
+        type: "boolean"
+      data:
+        type: "object"
+      error:
+        type: "object"
