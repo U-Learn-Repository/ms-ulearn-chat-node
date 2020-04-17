@@ -1,4 +1,5 @@
 import { mongoose } from '@typegoose/typegoose';
+import logger from "../../../logger";
 
 /**
  * Clase que se encarga del manejo de mensaje de errores para el controlador
@@ -22,7 +23,7 @@ export class ErrorHandler {
         if (this.error instanceof mongoose.Error.ValidationError) {
             return 'El modelo tiene datos incompletos';
         }
-        console.error(this.error);
+        logger.error(this.error);
         return 'Error no identificado';
     }
 }
