@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
-import router from "./chats/v1";
-import { connectDB } from "./database";
+import router from './chats/v1';
+import { connectDB } from './database';
 
 const app = express();
 // Configuracion

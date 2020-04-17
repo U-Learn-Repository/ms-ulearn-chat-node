@@ -1,7 +1,7 @@
 /**
  * Interfaz para objeto de paginacion de resultados
  */
-export interface Pagination{
+export interface Pagination {
   /**
    * Limite de resultados por pagina
    */

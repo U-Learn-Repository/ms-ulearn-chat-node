@@ -1,15 +1,15 @@
-import { resolve } from "path"
-import { config } from "dotenv"
+import { resolve } from 'path';
+import { config } from 'dotenv';
 
 let path;
 switch (process.env.NODE_ENV) {
-  case "production":
+  case 'production':
     path = '../config/.env';
     break;
   default:
     path = '../config/.env.dev';
 }
-config({ path: resolve(__dirname, path) })
+config({ path: resolve(__dirname, path) });
 
 // Mapper for environment variables
 export const environment = process.env.NODE_ENV;

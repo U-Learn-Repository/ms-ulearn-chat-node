@@ -1,5 +1,5 @@
 import { getModelForClass } from '@typegoose/typegoose';
-import { Pagination } from "./dao.interface";
+import { Pagination } from './dao.interface';
 import { GrupoModel } from '../dto/grupo.dto';
 
 /**
@@ -18,13 +18,13 @@ export class GrupoDao {
     }
 
     /**
-     * Obtiene un conjunto de chats que coinciden con el query de busqueda, 
+     * Obtiene un conjunto de chats que coinciden con el query de busqueda,
      * adicionalmente el resultado puede ser paginado mediante el parametro paginate
      * @param query Parametros de busqueda
      * @param paginate Paginador de resultados
      */
     public read(query: any, paginate?: Pagination): Promise<GrupoModel[]> {
-        let response = this.controller.find(query)
+        const response = this.controller.find(query)
             .skip(paginate.limit * (paginate.page - 1))
             .limit(paginate.limit)
             .lean<GrupoModel>();
@@ -36,7 +36,7 @@ export class GrupoDao {
      * @param dto Modelo con los datos a actualizar
      */
     public update(dto: GrupoModel): Promise<GrupoModel> {
-        let query: any = {
+        const query: any = {
             idAdmin: dto.idAdmin,
             idGrupo: dto.idGrupo,
         };
@@ -48,7 +48,7 @@ export class GrupoDao {
     }
 
     /**
-     * Elimina un chat 
+     * Elimina un chat
      * @param dto Modelo con los datos a eliminar
      */
     public delete(dto: GrupoModel): Promise<any> {
@@ -56,8 +56,8 @@ export class GrupoDao {
             .exec();
     }
 
-    public updateMessageList(idGrupo: number, idMensaje: number){
-        let query: any = {
+    public updateMessageList(idGrupo: number, idMensaje: number) {
+        const query: any = {
             idGrupo: idGrupo,
         };
         return this.controller.findOneAndUpdate(query, {
@@ -72,6 +72,6 @@ export class GrupoDao {
      * @param dto Modelo con los datos a verificar
      */
     public exist(dto: GrupoModel): Promise<GrupoModel> {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
 }

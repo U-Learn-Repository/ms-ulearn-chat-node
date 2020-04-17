@@ -1,6 +1,6 @@
 import { getModelForClass } from '@typegoose/typegoose';
-import { ChatModel } from "../dto/chat.dto";
-import { Pagination } from "./dao.interface";
+import { ChatModel } from '../dto/chat.dto';
+import { Pagination } from './dao.interface';
 
 /**
  * Clase que implementa la interfaz de acceso a datos para la entidad de chat
@@ -18,18 +18,18 @@ export class ChatDao {
     }
 
     /**
-     * Obtiene un conjunto de chats que coinciden con el query de busqueda, 
+     * Obtiene un conjunto de chats que coinciden con el query de busqueda,
      * adicionalmente el resultado puede ser paginado mediante el parametro paginate
      * @param query Parametros de busqueda
      * @param paginate Paginador de resultados
      */
     public read(query: any, paginate?: Pagination): Promise<ChatModel[]> {
-        let response = this.controller.find(query)
+        const response = this.controller.find(query)
             .sort('-idMensaje')
             .lean<ChatModel>();
         if (paginate) {
             response.skip(paginate.limit * (paginate.page - 1))
-                .limit(paginate.limit)
+                .limit(paginate.limit);
         }
         return response.exec();
     }
@@ -39,7 +39,7 @@ export class ChatDao {
      * @param dto Modelo con los datos a actualizar
      */
     public update(dto: ChatModel): Promise<ChatModel> {
-        let query: any = {
+        const query: any = {
             idAutor: dto.idAutor,
             // idGrupo: dto.idGrupo,
         };
@@ -52,7 +52,7 @@ export class ChatDao {
     }
 
     /**
-     * Elimina un chat 
+     * Elimina un chat
      * @param dto Modelo con los datos a eliminar
      */
     public delete(dto: ChatModel): Promise<any> {
@@ -65,6 +65,6 @@ export class ChatDao {
      * @param dto Modelo con los datos a verificar
      */
     public exist(dto: ChatModel): Promise<ChatModel> {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
 }

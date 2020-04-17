@@ -1,4 +1,4 @@
-import { mongoose } from "@typegoose/typegoose";
+import { mongoose } from '@typegoose/typegoose';
 
 /**
  * Clase que se encarga del manejo de mensaje de errores para el controlador
@@ -15,7 +15,7 @@ export class ErrorHandler {
     }
 
     /**
-     * Retorna una cadena que describe el error capturado de forma que no 
+     * Retorna una cadena que describe el error capturado de forma que no
      * expone la logica del servicio
      */
     public errorMessage(): string {
