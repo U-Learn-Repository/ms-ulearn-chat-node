@@ -21,6 +21,8 @@ services:
     links:
       # The name should be similar to the service you will build
       - ulearn-chat-db
+    environment:
+      NODE_ENV: production
   # Our database service called mongo
   ulearn-chat-db:
     # The name of the database container, NOTE: it is similar to the name provided

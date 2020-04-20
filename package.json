@@ -4,7 +4,7 @@
   "description": "microservicio para funcionalidad de chat",
   "main": "dist/server.js",
   "scripts": {
-    "start": "tsc && SET NODE_ENV=production&& node dist/server.js",
+    "start": "tsc && node dist/server.js",
     "dev": "nodemon --exec ts-node src/server.ts",
     "lint": "tslint -o lint.txt --force -c tslint.json 'src/**/*.ts'"
   },
