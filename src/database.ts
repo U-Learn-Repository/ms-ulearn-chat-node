@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { db } from './config';
 
-const dbURI = `mongodb://${db.host}:27017/${db.name}`;
+const dbURI = `mongodb://${db.host}:${db.port}/${db.name}`;
 const options = {
 	useNewUrlParser: true,
 	useCreateIndex: true,

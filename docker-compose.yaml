@@ -14,21 +14,28 @@ services:
       dockerfile: Dockerfile
     # Exposes the necessary ports that our node app uses
     ports:
-      - "3000:3000"
+      - "6663:6663"
     # All the services our node app will link to -
     # which in our case is only mongo
     # You can other services such as a Redis
     links:
       # The name should be similar to the service you will build
       - ulearn-chat-db
+    # Set the environment of the deploy
     environment:
       NODE_ENV: production
+      DB_PORT: 6662
+    # Set dependency relation
+    depends_on:
+      - ulearn-chat-db
   # Our database service called mongo
   ulearn-chat-db:
     # The name of the database container, NOTE: it is similar to the name provided
     container_name: ulearn-chat-db
     # Builds a mongo image from the docker repository
     image: mongo
+    # Change the port that Mongo uses
+    command: mongod --port 6662
     # Exposes the ports that Mongo uses
-    ports:
-      - "27017:27017"
+    expose:
+      - "6662"
