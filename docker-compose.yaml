@@ -11,7 +11,7 @@ services:
     # Docker file we created
     build:
       context: .
-      dockerfile: Dockerfile_srv
+      dockerfile: Dockerfile
     # Exposes the necessary ports that our node app uses
     ports:
       - "3000:3000"

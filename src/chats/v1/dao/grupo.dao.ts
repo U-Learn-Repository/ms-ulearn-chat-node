@@ -1,6 +1,7 @@
 import { getModelForClass } from '@typegoose/typegoose';
 import { Pagination } from './dao.interface';
 import { GrupoModel } from '../dto/grupo.dto';
+import { ChatModel } from '../dto';
 
 /**
  * Clase que implementa la interfaz de acceso a datos para la entidad de chat
@@ -56,22 +57,25 @@ export class GrupoDao {
             .exec();
     }
 
-    public updateMessageList(idGrupo: number, idMensaje: number) {
-        const query: any = {
-            idGrupo: idGrupo,
-        };
-        return this.controller.findOneAndUpdate(query, {
-            $push: { mensajes: idMensaje },
-        }, {
-            new: true,
-        }).exec();
-    }
-
     /**
      * Verifica si existe un chat
      * @param dto Modelo con los datos a verificar
      */
     public exist(dto: GrupoModel): Promise<GrupoModel> {
         throw new Error('Method not implemented.');
+    }
+
+    public readWithChats(query: any, paginate?: Pagination): Promise<GrupoModel[]> {
+        const response = this.controller.find(query)
+            .populate({
+                path: 'mensajes',
+                model: getModelForClass(ChatModel),
+                options: {
+                    limit: paginate.limit,
+                    skip: paginate.limit * (paginate.page - 1)
+                }
+            })
+            .lean<GrupoModel>();
+        return response.exec();
     }
 }

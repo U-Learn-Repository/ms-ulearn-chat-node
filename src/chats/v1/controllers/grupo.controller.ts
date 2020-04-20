@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { isNull } from 'util';
+import { isNull, isUndefined } from 'util';
 import { GrupoDao, Pagination } from '../dao';
 import { ErrorHandler } from './errorHandler';
 import { ResponseMsg } from './models';
@@ -18,18 +18,24 @@ export class GrupoController {
      */
     public async getAllGrupos(req: Request, res: Response, next: NextFunction) {
         const controller = new GrupoDao();
-        const entity: ResponseMsg = {success: true};
+        const entity: ResponseMsg = { success: true };
         let status = 200;
         const params: any = {
-            idAdmin: req.query.idAdmin,
-            idGrupo: req.query.idGrupo,
+            idAutores: req.query.idAutor,
         };
+        if (!isUndefined(req.query.idGrupo)) {
+            params.idGrupo = req.query.idGrupo;
+        }
         const paginador: Pagination = {
             limit: isNull(req.query.limit) ? 0 : Number(req.query.limit),
             page: isNull(req.query.page) ? 0 : Number(req.query.page),
         };
         try {
-            entity.data = await controller.read(params, paginador);
+            if (params.idGrupo) {
+                entity.data = await controller.readWithChats(params, paginador);
+            } else {
+                entity.data = await controller.read(params, paginador);
+            }
         } catch (error) {
             entity.error = new ErrorHandler(error).errorMessage();
             entity.success = false;
@@ -50,7 +56,7 @@ export class GrupoController {
      */
     public async createGrupo(req: Request, res: Response, next: NextFunction) {
         const controller = new GrupoDao();
-        const entity: ResponseMsg = {success: true};
+        const entity: ResponseMsg = { success: true };
         let status = 201;
         try {
             const dto = req.body;
@@ -72,7 +78,7 @@ export class GrupoController {
      */
     public async updateGrupo(req: Request, res: Response, next: NextFunction) {
         const controller = new GrupoDao();
-        const entity: ResponseMsg = {success: true};
+        const entity: ResponseMsg = { success: true };
         let status = 200;
         try {
             const params: GrupoModel = {
@@ -101,7 +107,7 @@ export class GrupoController {
      */
     public async deleteGrupo(req: Request, res: Response, next: NextFunction) {
         const controller = new GrupoDao();
-        const entity: ResponseMsg = {success: true};
+        const entity: ResponseMsg = { success: true };
         let status = 200;
         try {
             const params: any = {

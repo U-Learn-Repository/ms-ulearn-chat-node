@@ -16,7 +16,7 @@ export class GrupoModel {
       /**
        * Id de los autores del grupo
        */
-      @prop({ required: true })
+      @arrayProp({ required: true, items: Number })
       idAutores!: number[];
 
       /**
@@ -31,6 +31,6 @@ export class GrupoModel {
       @prop({ required: true })
       titulo!: string;
 
-      @arrayProp({ ref: 'ChatModel', refType: mongoose.Schema.Types.ObjectId })
+      @arrayProp({ ref: ChatModel, refType: mongoose.Schema.Types.ObjectId })
       mensajes?: Ref<ChatModel>[];
 }
