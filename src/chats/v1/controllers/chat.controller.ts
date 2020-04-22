@@ -66,6 +66,7 @@ export class ChatController {
                 return res.status(400).json(entity);
             }
             entity.data = await chatController.create(req.body);
+            const resp = await grupoController.updateMessageList(req.body.idGrupo, entity.data);
         } catch (error) {
             entity.error = new ErrorHandler(error).errorMessage();
             entity.success = false;

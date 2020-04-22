@@ -57,6 +57,17 @@ export class GrupoDao {
             .exec();
     }
 
+    public updateMessageList(idGrupo: number, idMensaje: ChatModel) {
+        const query: any = {
+            idGrupo: idGrupo,
+        };
+        return this.controller.findOneAndUpdate(query, {
+            $push: { mensajes: idMensaje },
+        }, {
+            new: true,
+        }).exec();
+    }
+
     /**
      * Verifica si existe un chat
      * @param dto Modelo con los datos a verificar
